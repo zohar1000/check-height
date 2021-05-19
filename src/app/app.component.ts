@@ -6,5 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'check-height';
+  items = [1];
+  lines;
+
+  onClickCount(count) {
+    this.items = new Array(Number(count));
+  }
+
+  onClickLines(lines) {
+    this.lines = Number(lines);
+console.log('lines:', this.lines);
+  }
 }
