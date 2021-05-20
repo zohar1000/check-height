@@ -9,11 +9,11 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
       <div style="display: flex; justify-content: space-evenly; padding: 1rem">
         <div style="width: 40%">
           <div>{{msgTextarea}}</div>
-          <textarea #textarea style="font-size: 1.5rem;">AA\nBB</textarea>
+          <textarea #textarea style="font-size: 1rem;">AA\nBB</textarea>
         </div>
         <div style="width: 40%">
           <div>{{msgDiv}}</div>
-          <div #div style="border: 1px solid black; font-size: 1.5rem; overflow: hidden">AA<br/>BB</div>
+          <div #div style="border: 1px solid black; font-size: 1rem; overflow: hidden">AA<br/>BB</div>
         </div>
       </div>
     </div>
@@ -21,44 +21,59 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
   styles: ['.content { background: lightgray; }']
 })
 export class ChildComponent implements AfterViewInit {
-  @Input() isKeep;
-  @Input() set lines(value) {
-    if (value) this.setLines(value);
+  @Input() set data(value) {
+    if (!value) return;
+    if (!this.isInit) {
+      this.initData = value;
+    } else {
+      this.setData(value);
+    }
   }
   @ViewChild('textarea') textarea;
   @ViewChild('div') div;
+  isKeepHeight;
+  isKeepText;
   msgTextarea = '';
   msgDiv = '';
+  isInit = false;
+  initData;
 
   elms = {
-    textarea: { sides: 2, in: 2, lineBreak: '\n', elm: null, fontSize: 0 },
-    div: { sides: 1, in: 2, lineBreak: '<BR/>', elm: null, fontSize: 0 }
+    textarea: { lineBreak: '\n', elm: null, initialText: '' },
+    div: { lineBreak: '<BR/>', elm: null, initialText: '' }
   };
 
   ngAfterViewInit() {
-    this.initFontSize('textarea');
-    this.initFontSize('div');
+    this.isInit = true;
+    this.initElm('textarea');
+    this.initElm('div');
+    if (this.initData) this.setData(this.initData);
   }
 
-  initFontSize(name) {
+  initElm(name) {
 console.time(`TIME => getting font size of ${name}`);
-    this.elms[name].elm = this[name]?.nativeElement;
-    const elm = this.elms[name].elm;
-    const compStyles = window.getComputedStyle(elm);
-    this.elms[name].fontSize = compStyles.getPropertyValue('font-size').replace('px', '');
+    const elmValue = this.elms[name];
+    elmValue.elm = this[name]?.nativeElement;
+    elmValue.initialText = elmValue.elm.innerHTML;
 console.timeEnd(`TIME => getting font size of ${name}`);
+  }
+
+  setData(data) {
+    this.isKeepHeight = data.isKeepHeight;
+    this.isKeepText = data.isKeepText;
+    this.setLines(data.lines);
   }
 
   setLines(num) {
     for (const key in this.elms) {
       const elmValue = this.elms[key];
-      const innerHTML = elmValue.elm.innerHTML;
 console.time(`TIME => setting height of ${num} lines for ${key}`);
       this.getHeight(elmValue, num);
 console.timeEnd(`TIME => setting height of ${num} lines for ${key}`);
-      key === 'textarea' ? this.msgTextarea = `${key} height is ${elmValue.elm.style.height}` : this.msgDiv = `${key} height is ${elmValue.elm.style.height}`;
-      elmValue.elm.innerHTML = innerHTML;
-       if (this.isKeep) elmValue.elm.style.height = 'auto';
+      const currHeight = elmValue.elm.style.height;
+      setTimeout(() => key === 'textarea' ? this.msgTextarea = `${key} height is ${currHeight}` : this.msgDiv = `${key} height is ${currHeight}`);
+      if (this.isKeepText) elmValue.elm.innerHTML = elmValue.initialText;
+       if (this.isKeepHeight) elmValue.elm.style.height = 'auto';
     }
   }
 

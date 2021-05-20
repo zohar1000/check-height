@@ -8,14 +8,18 @@ import { Component } from '@angular/core';
 export class AppComponent {
   items = [1];
   lines;
-  isKeep = false;
+  isKeepHeight = true;
+  isKeepText = true;
+  data;
 
   onClickCount(count) {
-    this.items = new Array(Number(count));
+    this.items = new Array(Number(count)).fill(0);
   }
 
-  onClickLines(lines, isKeep) {
-    this.isKeep = isKeep;
+  onClickLines(lines, isKeepHeight, isKeepText) {
+    this.isKeepHeight = isKeepHeight;
+    this.isKeepText = isKeepText;
     this.lines = Number(lines);
+    this.data = { lines: Number(lines), isKeepHeight, isKeepText }
   }
 }
