@@ -9,11 +9,11 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
       <div style="display: flex; justify-content: space-evenly; padding: 1rem">
         <div style="width: 40%">
           <div>{{msgTextarea}}</div>
-          <textarea #textarea style="font-size: 1rem;">AA\nBB</textarea>
+          <textarea #textarea style="font-size: 1.5rem;">AA\nBB</textarea>
         </div>
         <div style="width: 40%">
           <div>{{msgDiv}}</div>
-          <div #div style="border: 1px solid black; font-size: 1rem; overflow: hidden">AA<br/>BB</div>
+          <div #div style="border: 1px solid black; font-size: 1.5rem; overflow: hidden">AA<br/>BB</div>
         </div>
       </div>
     </div>
@@ -51,11 +51,9 @@ export class ChildComponent implements AfterViewInit {
   }
 
   initElm(name) {
-console.time(`TIME => getting font size of ${name}`);
     const elmValue = this.elms[name];
     elmValue.elm = this[name]?.nativeElement;
     elmValue.initialText = elmValue.elm.innerHTML;
-console.timeEnd(`TIME => getting font size of ${name}`);
   }
 
   setData(data) {
@@ -73,7 +71,7 @@ console.timeEnd(`TIME => setting height of ${num} lines for ${key}`);
       const currHeight = elmValue.elm.style.height;
       setTimeout(() => key === 'textarea' ? this.msgTextarea = `${key} height is ${currHeight}` : this.msgDiv = `${key} height is ${currHeight}`);
       if (this.isKeepText) elmValue.elm.innerHTML = elmValue.initialText;
-       if (this.isKeepHeight) elmValue.elm.style.height = 'auto';
+      if (this.isKeepHeight) elmValue.elm.style.height = 'auto';
     }
   }
 
