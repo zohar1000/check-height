@@ -8,13 +8,14 @@ import { Component } from '@angular/core';
 export class AppComponent {
   items = [1];
   lines;
+  isKeep = false;
 
   onClickCount(count) {
     this.items = new Array(Number(count));
   }
 
-  onClickLines(lines) {
+  onClickLines(lines, isKeep) {
+    this.isKeep = isKeep;
     this.lines = Number(lines);
-console.log('lines:', this.lines);
   }
 }
