@@ -2,7 +2,7 @@
 <input type="number" value="1" style="width: 5rem" #count><button (click)="onClickCount(count.value)">Number of items</button>
 &nbsp;&nbsp;&nbsp;&nbsp;
 <input type="number" value="1" style="width: 5rem" #lineCount><button (click)="onClickLines(lineCount.value, keepHeight.checked, keepText.checked)">Minimum lines</button>
-<input type="checkbox" #keepHeight checked>keep initial height
+<input type="checkbox" #keepHeight>keep initial height
 <input type="checkbox" #keepText checked>keep initial text
 
 <ng-container *ngFor="let item of items">

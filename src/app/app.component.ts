@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   items = [1];
   lines;
-  isKeepHeight = true;
+  isKeepHeight = false;
   isKeepText = true;
   data;
 

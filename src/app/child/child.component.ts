@@ -9,11 +9,11 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
       <div style="display: flex; justify-content: space-evenly; padding: 1rem">
         <div style="width: 40%">
           <div>{{msgTextarea}}</div>
-          <textarea #textarea style="font-size: 1.5rem;">AA\nBB</textarea>
+          <textarea #textarea>AA\nBB</textarea>
         </div>
         <div style="width: 40%">
           <div>{{msgDiv}}</div>
-          <div #div style="border: 1px solid black; font-size: 1.5rem; overflow: hidden">AA<br/>BB</div>
+          <div #div style="border: 1px solid black; overflow: hidden">AA<br/>BB</div>
         </div>
       </div>
     </div>
